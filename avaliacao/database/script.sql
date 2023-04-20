@@ -27,8 +27,8 @@ CREATE TABLE vendas (
 INSERT INTO vendedores VALUES 
 (default, "Stefany Antonella", 14644),
 (default, "Stella Viana", 01516),
-(default, "Tomás Isaac", 50913),
-(default, "Osvaldo Galvão", 72193);
+(default, "Tomas Isaac", 50913),
+(default, "Osvaldo Galvao", 72193);
 
 INSERT INTO produtos VALUES
 (default, "Samsung Galaxy M53", 2211.11),

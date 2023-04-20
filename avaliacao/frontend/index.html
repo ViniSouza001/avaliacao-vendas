@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/store.png"></link>
+    <title>Vendas</title>
+    <link rel="stylesheet" href="./stylesheet/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./scripts/api.js"></script>
+</head>
+<body>
+    <span id="cover" class="hidden"></span>
+    <h1>Vendedores</h1>
+    <table>
+        <thead>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Matrícula</th>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <div class="modal hidden">
+        <form action="http://localhost:3000/vendedor/alterar">
+            <h3 id="inpID"></h3>
+            <p>
+                <label for="nome">Nome: </label>
+                <input type="text" id="nome" name="nome">
+            </p>
+            <p>
+                <label for="nome">Matricula: </label>
+                <input type="number" id="matricula" name="matricula">
+            </p>
+        </form>
+        <footer>
+            <button id="btnAlterar">Alterar</button>
+            <button id="btnFechar">Fechar</button>
+        </footer>
+    </div>
+</body>
+<script src="./scripts/script.js"></script>
+</html>
