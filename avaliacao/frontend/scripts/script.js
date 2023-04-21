@@ -1,5 +1,6 @@
 api.get("/vendedores")
 .then(resp => {
+    console.log(resp)
     console.log(resp.data);
     formatarTabela(resp.data);
 })

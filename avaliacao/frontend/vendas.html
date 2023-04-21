@@ -4,24 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="assets/store.png"></link>
     <title>Vendas</title>
-    <link rel="stylesheet" href="./stylesheet/style.css">
+    <link rel="icon" href="assets/store.png"></link>
+    <link rel="stylesheet" href="./stylesheet/vendas.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./scripts/api.js"></script>
 </head>
 <body>
-    <span id="cover" class="hidden"></span>
-    <h1>Vendedores</h1>
+    <h1 class="titulo">Vendas</h1>
     <table>
         <thead>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Matrícula</th>
+            <tr>
+                <th>Data</th>
+                <th>Quantidade</th>
+                <th>Vendedor</th>
+                <th>Produto</th>
+            </tr>
         </thead>
         <tbody></tbody>
     </table>
-
     <div class="modal hidden">
         <form action="http://localhost:3000/vendedor/alterar">
             <h3 id="inpID"></h3>
@@ -39,12 +40,6 @@
             <button id="btnFechar">Fechar</button>
         </footer>
     </div>
-    <footer>
-        <a href="./vendas.html">
-            <h1 id="vendas">Vendas</h1>
-            <img src="./assets/shop.png" alt="shop.png">
-        </a>
-    </footer>
 </body>
-<script src="./scripts/script.js"></script>
+<script src="./scripts/vendas.js"></script>
 </html>

@@ -56,11 +56,12 @@ JOIN vendedores ON vendas.vendedorId = vendedores.id
 JOIN produtos ON vendas.produtoId = produtos.id 
 GROUP BY vendas.vendedorId;
 
+DROP VIEW IF EXISTS vendas_detalhadas;
 CREATE VIEW vendas_detalhadas AS
-SELECT vendas.data, produtos.nome AS nome_produto, vendedores.nome AS nome_vendedor
-FROM vendas 
-JOIN vendedores ON vendas.vendedorId = vendedores.id 
-JOIN produtos ON vendas.produtoId = produtos.id;
+SELECT v.data, v.quantidade, p.nome AS produto, vd.nome AS vendedor
+FROM vendas v
+JOIN produtos p ON v.produtoId = p.id
+JOIN vendedores vd ON v.vendedorId = vd.id;
 
 CREATE VIEW vendas_total AS
 SELECT SUM(quantidade * valor) AS total_vendas
