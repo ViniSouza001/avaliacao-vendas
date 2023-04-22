@@ -1,9 +1,18 @@
-let tbody = document.querySelector('tbody');
-
+var tbody = document.querySelector('tbody');
+var tabela = document.querySelector('table');
+var inpData = document.querySelector('#data');
+var inpQtd = document.querySelector('#qtd');
+var inpVendedor = document.querySelector('#vendedor');
+var inpProduto = document.querySelector('#produto');
+var modal = document.querySelector('.modal');
+var cover = document.querySelector('#cover');
+const btnAlterar = document.querySelector('#btnAlterar');
+var vendedorIdGlobal;
+var produtoIdGlobal;
+var idVenda;
 
 api.get('/vendas-detalhadas')
 .then(resp => {
-    console.log(resp.data);
     formatarTabela(resp.data);
 })
 .catch(err => {
@@ -13,12 +22,13 @@ api.get('/vendas-detalhadas')
 function formatarTabela(data) {
     data.forEach(element => {
         let linha = document.createElement('tr');
+        let data = transformaData(element.data);
         linha.innerHTML = `
-        <td>${transformaData(element.data)}</td>
+        <td>${data}</td>
         <td>${element.quantidade}</td>
-        <td>${element.produto}</td>
         <td>${element.vendedor}</td>
-        <td><img src="https://cdn-icons-png.flaticon.com/512/5278/5278663.png" onclick="alterarInformacoes(${element.quantidade}, '${element.produto}', '${element.vendedor}')" /></td>
+        <td>${element.produto}</td>
+        <td><img src="https://static.thenounproject.com/png/1266892-200.png" onclick="alterarInformacoes(${element.id}, '${data}',${element.quantidade}, ${element.produto_id}, '${element.produto}', '${element.vendedor}', ${element.vendedor_id})" /></td>
         `
         tbody.appendChild(linha);
     })
@@ -29,9 +39,63 @@ function transformaData(data) {
   const dataFormatada = new Date(data).toLocaleDateString('pt-BR', opcoes);
   return dataFormatada;
 }
- 
-function alterarInformacoes(quantidade, produto, vendedor) {
-    console.log(quantidade);
-    console.log(produto);
-    console.log(vendedor);
+
+function converterDataParaISO(dataBrasileira) {
+  const elementosData = dataBrasileira.split('/'); // separa os elementos usando o hífen como separador
+  const dia = elementosData[0];
+  const mes = elementosData[1];
+  const ano = elementosData[2];
+  
+  const dataISO = `${ano}-${mes}-${dia}`; // reordena os elementos no formato ISO
+
+  return dataISO;
 }
+
+function alterarInformacoes(id, data, quantidade, produto_id, produto, vendedor, vendedor_id) {
+    inpData.value = converterDataParaISO(data);
+    inpQtd.value = quantidade;
+    inpVendedor.value = vendedor;
+    inpProduto.value = produto; // 
+    produtoIdGlobal = produto_id;
+    idVenda = id; // id da venda
+    modal.classList.toggle('hidden');
+    cover.classList.toggle('hidden');
+    tabela.classList.toggle('hidden');
+    vendedorIdGlobal = vendedor_id;
+}
+
+function fechar() {
+    modal.classList.toggle('hidden');
+    cover.classList.toggle('hidden');
+    tabela.classList.toggle('hidden');
+}
+
+btnAlterar.addEventListener('click', () => {
+    let body = {
+        'data': inpData.value,
+        'quantidade': inpQtd.value,
+        'produtoId': produtoIdGlobal,
+        'vendedorId': vendedorIdGlobal,
+        'id': idVenda
+    };
+
+    let load = {
+        "method": "PUT",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+    }
+
+    fetch('http://localhost:3000/vendas/alterar', load)
+    .then(response => {return response.json()})
+    .then(data => {
+        if(data.affectedRows != 0) {
+            location.reload();
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        alert("Oops! Something went wrong");
+    })
+})
